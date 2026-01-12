@@ -1,0 +1,8 @@
+# Ignore Makefiles
+Makefile linguist-language=Text
+makefile linguist-language=Text
+*.mk linguist-language=Text
+
+#Ignore dtrace files
+*.d linguist-vendored
+*.dtrace linguist-vendored
