@@ -179,10 +179,36 @@ var statsCmd = &cobra.Command{
 	},
 }
 
+var reportCmd = &cobra.Command{
+	Use:   "report",
+	Short: "Generate progress report & charts using Python",
+	Run: func(cmd *cobra.Command, args []string) {
+		if _, err := os.Stat(dataFile); os.IsNotExist(err) {
+			fmt.Println("No workouts yet. Add some first!")
+			return
+		}
+
+		projectRoot, _ := os.Getwd()
+		pyBin := filepath.Join(projectRoot, "python-report", "report.py")
+
+		cmdExec := exec.Command("python3", pyBin, dataFile)
+		cmdExec.Stdout = os.Stdout
+		cmdExec.Stderr = os.Stderr
+
+		if err := cmdExec.Run(); err != nil {
+			fmt.Printf("Failed to run Python report: %v\n", err)
+			return
+		}
+
+		fmt.Println("\nPython-powered report complete!")
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(viewCmd)
 	rootCmd.AddCommand(statsCmd)
+	rootCmd.AddCommand(reportCmd)
 }
 
 func Execute() {

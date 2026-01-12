@@ -1,0 +1,11 @@
+Squat:
+  - Entries: 1
+  - Max Weight: 225.0 lbs
+  - Total Volume: 2700.0 lbs
+
+Bench:
+  - Entries: 1
+  - Max Weight: 275.0 lbs
+  - Total Volume: 3300.0 lbs
+
+Overall total volume: 6000.0 lbs
