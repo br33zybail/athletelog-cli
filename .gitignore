@@ -1,0 +1,24 @@
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+#Rust / Cargo
+target/
+
+# VS Code
+.vscode/
+
+# temp files
+.DS_Store
+*.swp
+.idea/
+.dtrace*
+.dtrace#
+*.log
+
+#Build artifacts
+*.out
+*.profraw
