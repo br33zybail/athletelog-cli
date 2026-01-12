@@ -4,9 +4,13 @@
 *.dll
 *.so
 *.dylib
+*.test
+*.out
 
 #Rust / Cargo
 target/
+debug/
+release/
 
 # VS Code
 .vscode/
@@ -22,3 +26,52 @@ target/
 #Build artifacts
 *.out
 *.profraw
+
+#Python
+.venv/
+venv/
+ENV/
+env/
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
+dist/
+build/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+#Typescript
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnp/
+.pnp.js
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/sdks/
+!.yarn/versions/
+
+#Misc
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Logs and temp files
+*.log
+tmp/
+temp/
