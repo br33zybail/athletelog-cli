@@ -1,8 +1,14 @@
 [
   {
     "date": "2026-01-11",
+    "exercise": "squat",
+    "weight": 225,
+    "reps": 12
+  },
+  {
+    "date": "2026-01-11",
     "exercise": "bench",
-    "weights": 135,
-    "reps": 10
+    "weight": 275,
+    "reps": 12
   }
 ]

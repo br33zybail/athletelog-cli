@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -21,7 +22,7 @@ var (
 type Workout struct {
 	Date     string  `json:"date"`     // ISO date: 2026-01-10
 	Exercise string  `json:"exercise"` // e.g., "Squat, "Deadlift", "bench"
-	Weight   float64 `json:"weights"`  // in kg
+	Weight   float64 `json:"weight"`   // in kg
 	Reps     int     `json:"reps"`
 }
 
@@ -40,8 +41,8 @@ var addCmd = &cobra.Command{
 	Short: "Add a new workout entry",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 4 {
-			fmt.Println("Usage: training-log add <date> <exercise> <weight> <reps>")
-			fmt.Println("Example: training-log add 2026-01-10 Squat 100 5")
+			fmt.Println("Usage: athletelog-cli add <date> <exercise> <weight> <reps>")
+			fmt.Println("Example: athletelog-cli add 2026-01-10 Squat 100 5")
 			os.Exit(1)
 		}
 
@@ -152,9 +153,36 @@ var viewCmd = &cobra.Command{
 	},
 }
 
+var statsCmd = &cobra.Command{
+	Use:   "stats",
+	Short: "Calculate advanced stats (e.g. estimated 1RM) using Rust",
+	Run: func(cmd *cobra.Command, args []string) {
+		if _, err := os.Stat(dataFile); os.IsNotExist(err) {
+			fmt.Println("No workouts yet. Add some first!")
+			return
+		}
+
+		// Path to Rust binary
+		projectRoot, _ := os.Getwd()
+		rustBin := filepath.Join(projectRoot, "rust-stats", "stats", "target", "release", "stats")
+
+		cmdExec := exec.Command(rustBin, dataFile)
+		cmdExec.Stdout = os.Stdout
+		cmdExec.Stderr = os.Stderr
+
+		if err := cmdExec.Run(); err != nil {
+			fmt.Printf("Failed to run Rust stats: %v\n", err)
+			return
+		}
+
+		fmt.Println("\nRust-powered stats complete!")
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(viewCmd)
+	rootCmd.AddCommand(statsCmd)
 }
 
 func Execute() {
