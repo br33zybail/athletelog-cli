@@ -2,6 +2,7 @@
 // use std::io::{self, BufRead};
 // use std::io::{self, Write};
 // use serde_json::{self, Value};
+// add more cargo bins?
 
 use std::env;
 use std::fs;
