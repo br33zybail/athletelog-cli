@@ -1,0 +1,22 @@
+{
+  "name": "ts-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild main.ts --bundle --outfile=main.js --format=esm --target=es2022",
+    "dev": "esbuild main.ts --bundle --outfile=main.js --format=esm --target=es2022 --watch & npx serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.0.8",
+    "esbuild": "^0.27.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1"
+  }
+}
