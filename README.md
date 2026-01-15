@@ -1,3 +1,5 @@
+![Go Version](https://img.shields.io)
+
 # AthleteLog – Multi-Language Training Tracker
 
 A personal workout logging system built by a former athlete pivoting to software engineering in 2026.
