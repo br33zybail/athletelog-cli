@@ -10,5 +10,17 @@
     "exercise": "bench",
     "weight": 275,
     "reps": 12
+  },
+  {
+    "date": "2026-01-13",
+    "exercise": "clean",
+    "weight": 185,
+    "reps": 15
+  },
+  {
+    "date": "2026-01-13",
+    "exercise": "bench",
+    "weight": 315,
+    "reps": 10
   }
 ]

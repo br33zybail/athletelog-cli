@@ -60,6 +60,7 @@ yarn-error.log
 !.yarn/releases/
 !.yarn/sdks/
 !.yarn/versions/
+ts-dashboard/*.js
 
 #Misc
 *.swp

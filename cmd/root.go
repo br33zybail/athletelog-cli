@@ -3,9 +3,11 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -204,11 +206,81 @@ var reportCmd = &cobra.Command{
 	},
 }
 
+var dashboardCmd = &cobra.Command{
+	Use:   "dashboard",
+	Short: "Launch the interactive Typescript dashboard in your browser",
+	Run: func(cmd *cobra.Command, args []string) {
+		const port = ":3000"
+		const dashboardPath = "/ts-dashboard/"
+		const fullURL = "http://localhost" + port + dashboardPath
+
+		// Start embedded static server in a goroutine
+		go func() {
+			rootDir, err := os.Getwd()
+			if err != nil {
+				fmt.Println("Failed to get working directory:", err)
+				return
+			}
+			fmt.Printf("Serving files from: %s\n", rootDir)
+
+			fs := http.FileServer(http.Dir(rootDir)) // serve from project root
+			mux := http.NewServeMux()
+
+			// Custom handler to support clean URLs and force index.html
+			mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+				if r.URL.Path == "/" {
+					http.Redirect(w, r, dashboardPath, http.StatusFound)
+					return
+				}
+
+				fs.ServeHTTP(w, r)
+
+			})
+
+			server := &http.Server{
+				Addr:    "0.0.0.0" + port,
+				Handler: mux,
+			}
+			if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+				fmt.Printf("Server failed: %v\n", err)
+			}
+		}()
+
+		// Give the server a moment to start
+		time.Sleep(800 * time.Millisecond)
+
+		//Cross-platform open browser
+		var openCmd *exec.Cmd
+		switch runtime.GOOS {
+		case "darwin": // macOS
+			openCmd = exec.Command("open", fullURL)
+		case "windows":
+			openCmd = exec.Command("powershell", "-NoProfile", "-Command", "Start-Process", fullURL)
+		default: // Linux, WSL, and others
+			openCmd = exec.Command("xdg-open", fullURL)
+		}
+
+		if err := openCmd.Start(); err != nil {
+			fmt.Printf("Auto-open failed: %v\n", err)
+			fmt.Println("Dashboard available at:", fullURL)
+			return
+		}
+
+		fmt.Println("Opening dashboard in your browser...")
+		fmt.Println("If it doesn't open automatically, visit:", fullURL)
+		fmt.Println("Press Ctrl+C to stop the server when done.")
+
+		// Keep the server running
+		select {}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(viewCmd)
 	rootCmd.AddCommand(statsCmd)
 	rootCmd.AddCommand(reportCmd)
+	rootCmd.AddCommand(dashboardCmd)
 }
 
 func Execute() {
