@@ -2,6 +2,7 @@ import sys
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import seaborn as sns
 from pathlib import Path
 
@@ -31,16 +32,17 @@ def main ():
     df['volume'] = df['weight'] * df['reps']
     
     # Group by exercise for plotting
-    exercise = df['exercise'].unique()
+    exercise_types = df['exercise'].unique()
     
     # Plot weight over time
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(data=df, x='date', y='weight', hue='exercise', marker='o')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.lineplot(data=df, x='date', y='weight', hue='exercise', marker='o', ax=ax)
+    fig.autofmt_xdate()
     plt.title('Weight Progress Over Time')
     plt.xlabel('Date')
     plt.ylabel('Weight')
     plt.grid(True)
-    plt.xticks(rotation=45)
+    ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))
     
     # Save plot
     
@@ -52,7 +54,7 @@ def main ():
     # Text summary
     
     summary = []
-    for ex in exercise:
+    for ex in exercise_types:
         ex_df = df[df['exercise'] == ex]
         summary.append(f"{ex.capitalize()}:")
         summary.append(f"  - Entries: {len(ex_df)}")
