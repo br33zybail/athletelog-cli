@@ -1,5 +1,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/br33zybail/athletelog-cli)](https://goreportcard.com/report/github.com/br33zybail/athletelog-cli)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # AthleteLog – Multi-Language Training Tracker
 
 A personal workout logging system built by a former athlete pivoting to software engineering in 2026.
