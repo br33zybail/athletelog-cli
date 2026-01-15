@@ -1,4 +1,4 @@
-![Go Version](https://img.shields.io)
+![Go Report Card](https://goreportcard.com/badge/github.com/br33zybail/athletelog-cli)](https://goreportcard.com/report/github.com/br33zybail/athletelog-cli)
 
 # AthleteLog – Multi-Language Training Tracker
 
