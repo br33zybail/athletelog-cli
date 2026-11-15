@@ -4,7 +4,7 @@
 
 # AthleteLog – Multi-Language Training Tracker
 
-A personal workout logging system built by a former athlete pivoting to software engineering in 2026.
+A personal workout logging system built by a former athlete.
 
 **Architecture highlight**: Demonstrates deliberate tool selection for each layer:
 - **Go** – fast CLI orchestrator & subprocess glue
